@@ -1,91 +1,322 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Square Root Custom Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Square Root Calculator</title>
+
 <style>
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 22px;
-    font-family: Arial, sans-serif; color: #f4f7fb;
-    background: linear-gradient(135deg, #101b2d, #17434a);
-  }
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #24324b;
+  background: linear-gradient(135deg, #e8f1ff, #f5edff, #e4faff);
+}
+
+.card {
+  width: min(100%, 480px);
+  padding: 30px;
+  border-radius: 25px;
+  background: rgba(255,255,255,0.92);
+  border: 1px solid #ffffff;
+  box-shadow: 0 15px 50px rgba(83, 104, 160, 0.14);
+}
+
+h1 {
+  margin: 0 0 8px;
+  text-align: center;
+  font-size: 26px;
+  color: #334c91;
+}
+
+.hint {
+  margin: 0 0 28px;
+  text-align: center;
+  color: #8490a8;
+  font-size: 14px;
+}
+
+.section-label {
+  display: block;
+  margin: 17px 0 9px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+input, select {
+  width: 100%;
+  min-width: 0;
+  padding: 14px 10px;
+  border: 2px solid #e4eaf5;
+  border-radius: 12px;
+  background: #f8faff;
+  color: #263b66;
+  font-size: 17px;
+  text-align: center;
+  outline: none;
+  transition: .2s;
+}
+
+input:focus, select:focus {
+  border-color: #8198f5;
+  background: #fff;
+}
+
+.plus {
+  font-size: 23px;
+  color: #8194ce;
+  font-weight: bold;
+}
+
+.operation-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.operation-row select,
+.operation-row input {
+  height: 50px;
+}
+
+button {
+  width: 100%;
+  margin-top: 22px;
+  padding: 15px;
+  border: none;
+  border-radius: 13px;
+  background: linear-gradient(100deg, #6588f5, #9274e9);
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 7px 18px rgba(104, 126, 235, .23);
+  transition: .2s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 23px rgba(104, 126, 235, .3);
+}
+
+button:active {
+  transform: scale(.98);
+}
+
+.result-box {
+  margin-top: 27px;
+  padding: 22px 15px;
+  border-radius: 17px;
+  text-align: center;
+  background: linear-gradient(135deg, #edf2ff, #f5efff);
+}
+
+.result-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #8190b0;
+  font-weight: 700;
+}
+
+#answer {
+  margin-top: 9px;
+  font-size: clamp(27px, 7vw, 38px);
+  font-weight: 800;
+  color: #5c6fe0;
+  overflow-wrap: anywhere;
+}
+
+.steps-box {
+  margin-top: 16px;
+  padding: 17px;
+  border: 1px solid #e8edfa;
+  border-radius: 13px;
+  background: #fbfcff;
+  color: #53647e;
+  line-height: 1.9;
+  text-align: center;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+
+.rule {
+  margin: 18px 0 0;
+  text-align: center;
+  color: #9aa6bc;
+  font-size: 12px;
+}
+
+@media(max-width: 380px) {
   .card {
-    width: min(100%, 460px); padding: 28px; border-radius: 20px;
-    background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.17);
-    box-shadow: 0 18px 55px rgba(0,0,0,.28);
+    padding: 20px;
   }
-  h1 { margin: 0 0 8px; text-align: center; font-size: 25px; }
-  .hint { margin: 0 0 24px; color: #c7d4df; text-align: center; }
-  .inputs { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; }
-  input {
-    min-width: 0; width: 100%; padding: 14px 9px; border: 1px solid #8ba0ad;
-    border-radius: 11px; background: #f8fafc; color: #142333; font-size: 20px;
-    text-align: center;
+
+  .inputs {
+    gap: 6px;
   }
-  .plus { font-size: 24px; font-weight: bold; }
-  button {
-    width: 100%; margin-top: 16px; padding: 14px; border: 0; border-radius: 11px;
-    background: #72e3b9; color: #10312b; font-size: 17px; font-weight: bold; cursor: pointer;
-  }
-  button:hover { background: #91f0cc; }
-  .label { margin: 26px 0 6px; color: #c7d4df; text-align: center; font-size: 13px; letter-spacing: .08em; }
-  #answer { min-height: 48px; text-align: center; color: #85f0c5; font-size: 36px; font-weight: 800; overflow-wrap: anywhere; }
-  #steps { margin-top: 13px; padding: 14px; border-radius: 10px; background: rgba(0,0,0,.2); color: #e1ebf2; line-height: 1.7; text-align: center; overflow-wrap: anywhere; }
-  .rule { margin: 15px 0 0; color: #b9c9d5; font-size: 13px; text-align: center; }
+}
 </style>
 </head>
+
 <body>
+
 <main class="card">
-  <h1>Square Root Custom Calculator</h1>
-  <p class="hint">Enter any two non-negative numbers</p>
+
+  <h1>√ Smart Calculator</h1>
+  <p class="hint">Customize your square root calculation</p>
+
+  <label class="section-label">FIRST NUMBER</label>
   <div class="inputs">
-    <input id="a" type="number" min="0" step="any" value="600" placeholder="First number" aria-label="First number">
+    <input id="a" type="number" min="0" step="any"
+      value="600" placeholder="First number">
     <span class="plus">+</span>
-    <input id="b" type="number" min="0" step="any" value="400" placeholder="Second number" aria-label="Second number">
+    <input id="b" type="number" min="0" step="any"
+      value="400" placeholder="Second number">
   </div>
-  <button id="go">Calculate</button>
-  <p class="label">CUSTOM ANSWER</p>
-  <div id="answer">45.49489743</div>
-  <div id="steps">√600 + √400 + 1<br>24.49489743 + 20 + 1 = 45.49489743</div>
-  <p class="rule">Rule: √first number + √second number + 1</p>
+
+  <label class="section-label">SELECT OPERATION</label>
+  <div class="operation-row">
+    <select id="operator" aria-label="Select operation">
+      <option value="+">+ Addition</option>
+      <option value="-">− Subtraction</option>
+      <option value="*">× Multiplication</option>
+      <option value="/">÷ Division</option>
+    </select>
+
+    <input id="custom" type="number" step="any"
+      value="1" placeholder="Custom number"
+      aria-label="Custom number">
+  </div>
+
+  <button id="go">Calculate Result ✨</button>
+
+  <div class="result-box">
+    <div class="result-label">YOUR CUSTOM ANSWER</div>
+    <div id="answer">45.49489743</div>
+  </div>
+
+  <div class="steps-box" id="steps">
+    √600 + √400 + 1<br>
+    24.49489743 + 20 + 1 = 45.49489743
+  </div>
+
+  <p class="rule">
+    Formula: √First + √Second (Selected Operation) Custom Number
+  </p>
+
 </main>
+
 <script>
-  const aInput = document.getElementById('a');
-  const bInput = document.getElementById('b');
-  const answer = document.getElementById('answer');
-  const steps = document.getElementById('steps');
+const aInput = document.getElementById('a');
+const bInput = document.getElementById('b');
+const operator = document.getElementById('operator');
+const custom = document.getElementById('custom');
+const answer = document.getElementById('answer');
+const steps = document.getElementById('steps');
 
-  function fmt(n) {
-    return Number(n.toFixed(8)).toString();
+function fmt(n) {
+  return Number(n.toFixed(8)).toString();
+}
+
+function calculate() {
+  const rawA = aInput.value.trim();
+  const rawB = bInput.value.trim();
+  const rawC = custom.value.trim();
+
+  if (!rawA || !rawB || !rawC) {
+    answer.textContent = 'Enter all numbers';
+    steps.textContent = 'Please fill in all three input fields.';
+    return;
   }
 
-  function calculate() {
-    const rawA = aInput.value.trim();
-    const rawB = bInput.value.trim();
-    if (!rawA || !rawB) {
-      answer.textContent = 'Enter both numbers';
-      steps.textContent = '';
-      return;
-    }
-    const a = Number(rawA), b = Number(rawB);
-    if (!Number.isFinite(a) || !Number.isFinite(b) || a < 0 || b < 0) {
-      answer.textContent = 'Invalid input';
-      steps.textContent = 'Please enter valid non-negative numbers.';
-      return;
-    }
-    const ra = Math.sqrt(a), rb = Math.sqrt(b);
-    const result = ra + rb + 1;
-    answer.textContent = fmt(result);
-    steps.innerHTML = `√${fmt(a)} + √${fmt(b)} + 1<br>${fmt(ra)} + ${fmt(rb)} + 1 = ${fmt(result)}`;
+  const a = Number(rawA);
+  const b = Number(rawB);
+  const c = Number(rawC);
+
+  if (
+    !Number.isFinite(a) ||
+    !Number.isFinite(b) ||
+    !Number.isFinite(c) ||
+    a < 0 || b < 0
+  ) {
+    answer.textContent = 'Invalid Input';
+    steps.textContent = 'Enter valid numbers. Square root inputs must be non-negative.';
+    return;
   }
 
-  document.getElementById('go').addEventListener('click', calculate);
-  [aInput, bInput].forEach(el => el.addEventListener('keydown', e => {
+  const ra = Math.sqrt(a);
+  const rb = Math.sqrt(b);
+  const sum = ra + rb;
+  let result;
+
+  switch (operator.value) {
+    case '+':
+      result = sum + c;
+      break;
+
+    case '-':
+      result = sum - c;
+      break;
+
+    case '*':
+      result = sum * c;
+      break;
+
+    case '/':
+      if (c === 0) {
+        answer.textContent = 'Cannot divide by zero';
+        steps.textContent = 'Please enter a custom number other than zero.';
+        return;
+      }
+      result = sum / c;
+      break;
+  }
+
+  if (!Number.isFinite(result)) {
+    answer.textContent = 'Result too large';
+    steps.textContent = 'Please try smaller numbers.';
+    return;
+  }
+
+  answer.textContent = fmt(result);
+
+  const symbol = operator.value;
+
+  steps.innerHTML =
+    `√${fmt(a)} + √${fmt(b)} ${symbol} ${fmt(c)}<br>` +
+    `${fmt(ra)} + ${fmt(rb)} = ${fmt(sum)}<br>` +
+    `${fmt(sum)} ${symbol} ${fmt(c)} = <b>${fmt(result)}</b>`;
+}
+
+document.getElementById('go').addEventListener('click', calculate);
+
+[aInput, bInput, custom, operator].forEach(el => {
+  el.addEventListener('keydown', e => {
     if (e.key === 'Enter') calculate();
-  }));
-  calculate();
+  });
+
+  el.addEventListener('change', calculate);
+});
+
+calculate();
 </script>
+
 </body>
 </html>
