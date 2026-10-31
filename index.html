@@ -4,242 +4,596 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Advanced Square Root Calculator</title>
+<title>Root Sequence Calculator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
 
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-  font-family: 'Segoe UI', Arial, sans-serif;
-  color: #263653;
-  background: linear-gradient(135deg, #e6f0ff, #f4eaff, #e2faff);
+:root {
+  color-scheme: light;
+  --ink: #182b2a;
+  --muted: #748481;
+  --line: #e3ebe8;
+  --surface: #ffffff;
+  --soft: #f5f8f6;
+  --teal: #087e70;
+  --teal-dark: #09675d;
+  --mint: #e8f5f0;
+  --coral: #e77f65;
+  --shadow: 0 24px 70px rgba(27, 62, 54, .10);
 }
 
-.card {
-  width: min(100%, 490px);
-  padding: 28px;
-  border-radius: 24px;
-  background: white;
-  border: 1px solid #fff;
-  box-shadow: 0 15px 50px rgba(75, 95, 160, .14);
+* {
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 38px 20px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  background-color: #f1f6f3;
+  background-image:
+    linear-gradient(rgba(40, 95, 82, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(40, 95, 82, .035) 1px, transparent 1px),
+    linear-gradient(145deg, #f7faf8, #edf4f0);
+  background-size: 32px 32px, 32px 32px, auto;
+}
+
+button, input, select { font: inherit; }
+
+.app-shell {
+  width: min(100%, 720px);
+  padding: clamp(22px, 5vw, 42px);
+  border: 1px solid rgba(255, 255, 255, .9);
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: white;
+  background: var(--teal);
+}
+
+.brand-mark iconify-icon { font-size: 22px; }
+
+.brand-name {
+  margin: 0;
+  font: 700 14px 'Space Grotesk', sans-serif;
+  letter-spacing: .2px;
+}
+
+.brand-caption {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border: 1px solid #dcece5;
+  border-radius: 999px;
+  color: #397264;
+  background: #f3faf6;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #39a581;
+}
+
+.page-heading {
+  margin: 29px 0 26px;
+}
+
+.eyebrow, .section-kicker {
+  color: var(--teal);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
 }
 
 h1 {
-  text-align: center;
-  color: #536bd0;
-  font-size: 26px;
-  margin: 0 0 8px;
+  margin: 7px 0 5px;
+  font: 600 32px/1.1 'Space Grotesk', sans-serif;
+  letter-spacing: 0;
 }
 
-.hint {
-  text-align: center;
-  color: #8b98ac;
-  margin: 0 0 25px;
+.subtitle {
+  margin: 0;
+  color: var(--muted);
   font-size: 14px;
 }
 
-.section-label {
-  display: block;
-  margin: 19px 0 9px;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: .7px;
-  color: #7786a2;
-}
-
-.inputs {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 9px;
+.section-heading {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-}
-
-.operation-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-input, select {
-  width: 100%;
-  min-width: 0;
-  padding: 14px 9px;
-  border: 2px solid #e6ebf6;
-  border-radius: 12px;
-  background: #f8faff;
-  color: #33466d;
-  font-size: 16px;
-  text-align: center;
-  outline: none;
-}
-
-input:focus, select:focus {
-  border-color: #8798ef;
-  background: white;
-}
-
-.plus {
-  color: #8193d7;
-  font-size: 23px;
-  font-weight: bold;
-}
-
-.step-card {
-  padding: 16px;
-  margin-top: 15px;
-  border-radius: 15px;
-  background: #f5f7ff;
-  border: 1px solid #e8ebfc;
-}
-
-.step-title {
-  font-size: 13px;
-  font-weight: 800;
-  color: #6679ce;
   margin-bottom: 12px;
 }
 
-button {
+.section-title {
+  margin: 0;
+  font: 600 14px 'Space Grotesk', sans-serif;
+}
+
+.section-index {
+  margin-right: 8px;
+  color: #a0b0ab;
+  font: 600 11px 'Space Grotesk', sans-serif;
+}
+
+.operation-count {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.values-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr);
+  align-items: end;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fbfcfb;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.control {
   width: 100%;
-  margin-top: 22px;
-  padding: 15px;
-  border: none;
-  border-radius: 13px;
-  background: linear-gradient(100deg, #6688f5, #9674e9);
-  color: white;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .2s;
+  min-width: 0;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid #dce5e1;
+  border-radius: 7px;
+  outline: none;
+  color: var(--ink);
+  background: white;
+  font-size: 14px;
+  transition: border-color .16s, box-shadow .16s;
 }
 
-button:hover {
-  transform: translateY(-2px);
+.control:focus {
+  border-color: #62a99a;
+  box-shadow: 0 0 0 3px rgba(8, 126, 112, .11);
 }
 
-.result-box {
-  margin-top: 25px;
-  padding: 22px 12px;
+.value-join {
+  height: 44px;
+  display: grid;
+  place-items: center;
+  color: var(--coral);
+  font: 600 20px 'Space Grotesk', sans-serif;
+}
+
+.operations-section { margin-top: 27px; }
+
+.operation-list {
+  overflow: visible;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.operation-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: white;
+}
+
+.operation-row + .operation-row { border-top: 1px solid var(--line); }
+.operation-row:focus-within { z-index: 4; }
+
+.operation-index {
+  color: #8b9b96;
+  font: 600 12px 'Space Grotesk', sans-serif;
   text-align: center;
-  border-radius: 17px;
-  background: linear-gradient(120deg, #edf2ff, #f5edff);
+}
+
+.custom-select {
+  position: relative;
+  min-width: 0;
+}
+
+.dropdown-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-trigger iconify-icon {
+  flex: 0 0 auto;
+  color: #788984;
+  font-size: 15px;
+  transition: transform .16s;
+}
+
+.dropdown-trigger[aria-expanded="true"] iconify-icon { transform: rotate(180deg); }
+
+.dropdown-menu {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 6px);
+  left: 0;
+  width: max(100%, 190px);
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 5px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 12px 28px rgba(27, 62, 54, .14);
+}
+
+.dropdown-menu[hidden] { display: none; }
+
+.dropdown-option {
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 10px;
+  border-radius: 5px;
+  color: var(--ink);
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+
+.dropdown-option:hover, .dropdown-option:focus { background: var(--soft); }
+
+.dropdown-option[aria-selected="true"] {
+  color: var(--teal-dark);
+  background: var(--mint);
+  font-weight: 700;
+}
+
+.icon-button, .icon-space {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+}
+
+.icon-button {
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  color: #879590;
+  background: transparent;
+  cursor: pointer;
+  transition: color .16s, background .16s, border-color .16s;
+}
+
+.icon-button:hover {
+  border-color: #f3d9d2;
+  color: #c85f48;
+  background: #fff5f2;
+}
+
+.icon-button:focus-visible, .add-operation:focus-visible, .calculate:focus-visible {
+  outline: 3px solid rgba(8, 126, 112, .25);
+  outline-offset: 2px;
+}
+
+.dropdown-trigger:focus-visible, .dropdown-option:focus-visible {
+  outline: 2px solid rgba(8, 126, 112, .45);
+  outline-offset: -2px;
+}
+
+.icon-button iconify-icon { font-size: 17px; }
+
+.add-operation {
+  width: 100%;
+  min-height: 43px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  border: 1px dashed #b9d1c9;
+  border-radius: 8px;
+  color: var(--teal-dark);
+  background: #f5faf7;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color .16s, background .16s;
+}
+
+.add-operation:hover:not(:disabled) {
+  border-color: var(--teal);
+  background: var(--mint);
+}
+
+.add-operation iconify-icon { font-size: 17px; }
+
+.add-operation:disabled {
+  color: #a0aaa6;
+  background: #f4f6f5;
+  cursor: not-allowed;
+}
+
+.calculate {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  margin-top: 21px;
+  border: 0;
+  border-radius: 8px;
+  color: white;
+  background: var(--teal);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .16s, transform .16s;
+}
+
+.calculate:hover {
+  transform: translateY(-1px);
+  background: var(--teal-dark);
+}
+
+.calculate iconify-icon { font-size: 18px; }
+
+.result-panel {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid #d8e9e2;
+  border-radius: 10px;
+  background: linear-gradient(110deg, #f0f8f4, #f8faf7 70%, #fbf5f0);
+}
+
+.result-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
 }
 
 .result-label {
-  color: #8390b1;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 2px;
+  color: #5d766d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+}
+
+.result-icon {
+  color: var(--coral);
+  font-size: 18px;
 }
 
 #answer {
-  color: #6175df;
-  font-size: clamp(27px, 7vw, 38px);
-  font-weight: 800;
-  margin-top: 10px;
+  margin-top: 8px;
+  color: #174e43;
+  font: 600 clamp(28px, 7vw, 40px)/1.15 'Space Grotesk', sans-serif;
   overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
 }
+
+.steps-section { margin-top: 25px; }
 
 .steps-box {
-  margin-top: 16px;
-  padding: 16px;
-  border-radius: 13px;
-  background: #fbfcff;
-  border: 1px solid #e9edf6;
-  text-align: center;
-  line-height: 2;
-  font-size: 14px;
-  color: #5c6c87;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: white;
+}
+
+.calculation-step {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 12px;
+  padding: 13px 15px;
+}
+
+.calculation-step + .calculation-step { border-top: 1px solid #edf1ef; }
+
+.step-number {
+  padding-top: 1px;
+  color: #94a49e;
+  font: 600 11px 'Space Grotesk', sans-serif;
+}
+
+.step-caption {
+  margin-bottom: 4px;
+  color: #6d807a;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.step-equation {
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.6;
   overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
 }
 
-.rule {
-  text-align: center;
-  margin-top: 18px;
-  color: #98a4b9;
-  font-size: 12px;
+.message {
+  margin: 0;
+  padding: 15px;
+  color: #a95441;
+  font-size: 13px;
 }
 
-@media(max-width: 380px) {
-  .card { padding: 19px; }
+@media (max-width: 520px) {
+  body { padding: 14px; }
+  .app-shell { padding: 22px 17px; border-radius: 15px; }
+  .topbar { padding-bottom: 21px; }
+  .page-heading { margin-top: 24px; }
+  h1 { font-size: 28px; }
+  .operation-row { grid-template-columns: 28px minmax(0, 1fr) minmax(0, 1fr) 34px; gap: 7px; padding: 9px 7px; }
+  .icon-button, .icon-space { width: 32px; height: 34px; }
+  .control { padding: 0 9px; font-size: 13px; }
+  .values-panel { gap: 8px; padding: 12px; }
+}
+
+@media (max-width: 360px) {
+  .operation-row { grid-template-columns: 25px minmax(0, 1fr) minmax(0, .9fr) 30px; gap: 5px; }
+  .control { padding: 0 6px; font-size: 12px; }
+  .status { padding: 6px 8px; font-size: 10px; }
 }
 </style>
 </head>
 
 <body>
-
-<main class="card">
-
-<h1>√ Smart Calculator</h1>
-<p class="hint">Advanced Custom Calculation</p>
-
-<label class="section-label">FIRST TWO NUMBERS</label>
-
-<div class="inputs">
-  <input id="a" type="number" min="0" step="any" value="600">
-  <span class="plus">+</span>
-  <input id="b" type="number" min="0" step="any" value="400">
-</div>
-
-<div class="step-card">
-  <div class="step-title">⚙️ FIRST OPERATION</div>
-  <div class="operation-row">
-    <select id="op1">
-      <option value="+">+ Addition</option>
-      <option value="-">− Subtraction</option>
-      <option value="*">× Multiplication</option>
-      <option value="/">÷ Division</option>
-    </select>
-
-    <input id="c1" type="number" step="any" value="1"
-      placeholder="Custom number">
+<main class="app-shell">
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true"><iconify-icon icon="lucide:radical"></iconify-icon></div>
+      <div>
+        <p class="brand-name">ROOT SEQUENCE</p>
+        <p class="brand-caption">Custom calculation workspace</p>
+      </div>
+    </div>
+    <div class="status"><span class="status-dot"></span>READY</div>
   </div>
-</div>
 
-<div class="step-card">
-  <div class="step-title">✨ SECOND OPERATION (ON RESULT)</div>
-  <div class="operation-row">
-    <select id="op2">
-      <option value="/">÷ Division</option>
-      <option value="*">× Multiplication</option>
-      <option value="+">+ Addition</option>
-      <option value="-">− Subtraction</option>
-    </select>
+  <header class="page-heading">
+    <div class="eyebrow">CALCULATOR / 01</div>
+    <h1>Build a sequence</h1>
+    <p class="subtitle">Start with two square roots, then shape the result.</p>
+  </header>
 
-    <input id="c2" type="number" step="any" value="1"
-      placeholder="Custom number">
-  </div>
-</div>
+  <section aria-labelledby="values-heading">
+    <div class="section-heading">
+      <h2 class="section-title" id="values-heading"><span class="section-index">01</span>Starting values</h2>
+    </div>
+    <div class="values-panel">
+      <label>
+        <span class="field-label">Number A</span>
+        <input class="control" id="a" type="number" min="0" step="any" value="600" aria-label="Number A">
+      </label>
+      <span class="value-join" aria-hidden="true">+</span>
+      <label>
+        <span class="field-label">Number B</span>
+        <input class="control" id="b" type="number" min="0" step="any" value="400" aria-label="Number B">
+      </label>
+    </div>
+  </section>
 
-<button id="go">Calculate Final Result ✨</button>
+  <section class="operations-section" aria-labelledby="operations-heading">
+    <div class="section-heading">
+      <h2 class="section-title" id="operations-heading"><span class="section-index">02</span>Operations</h2>
+      <span class="operation-count" id="operation-count" aria-live="polite">2 / 9</span>
+    </div>
+    <div class="operation-list" id="operations"></div>
+    <button id="add-operation" class="add-operation" type="button">
+      <iconify-icon icon="lucide:plus" aria-hidden="true"></iconify-icon>
+      <span>Add operation</span>
+    </button>
+  </section>
 
-<div class="result-box">
-  <div class="result-label">FINAL ANSWER</div>
-  <div id="answer">46.49489743</div>
-</div>
+  <button id="go" class="calculate" type="button">
+    <iconify-icon icon="lucide:play" aria-hidden="true"></iconify-icon>
+    <span>Calculate result</span>
+  </button>
 
-<div class="steps-box" id="steps"></div>
+  <section class="result-panel" aria-live="polite" aria-label="Final result">
+    <div class="result-topline">
+      <span class="result-label">FINAL RESULT</span>
+      <iconify-icon class="result-icon" icon="lucide:move-up-right" aria-hidden="true"></iconify-icon>
+    </div>
+    <div id="answer">46.49489743</div>
+  </section>
 
-<p class="rule">
-  Formula: (√A + √B) Operation 1 Operation 2
-</p>
-
+  <section class="steps-section" aria-labelledby="steps-heading">
+    <div class="section-heading">
+      <h2 class="section-title" id="steps-heading"><span class="section-index">03</span>Calculation steps</h2>
+    </div>
+    <div class="steps-box" id="steps" aria-live="polite"></div>
+  </section>
 </main>
 
 <script>
 const $ = id => document.getElementById(id);
+const operators = [
+  { value: '+', label: 'Addition (+)' },
+  { value: '-', label: 'Subtraction (-)' },
+  { value: '*', label: 'Multiplication (×)' },
+  { value: '/', label: 'Division (÷)' }
+];
+const operationData = [
+  { operator: '+', custom: '1' },
+  { operator: '/', custom: '1' }
+];
 
-function fmt(n) {
-  return Number(n.toFixed(8)).toString();
+function fmt(number) {
+  return Number(number.toFixed(8)).toString();
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[character]);
 }
 
 function applyOperation(value, operator, custom) {
-  switch(operator) {
+  switch (operator) {
     case '+': return value + custom;
     case '-': return value - custom;
     case '*': return value * custom;
@@ -247,90 +601,220 @@ function applyOperation(value, operator, custom) {
   }
 }
 
-function calculate() {
-  const a = $('a').value.trim();
-  const b = $('b').value.trim();
-  const c1 = $('c1').value.trim();
-  const c2 = $('c2').value.trim();
+function renderOperations() {
+  $('operations').innerHTML = operationData.map((operation, index) => {
+    const operationNumber = index + 1;
+    const options = operators.map(({ value, label }) =>
+      `<div class="dropdown-option" role="option" tabindex="-1" data-value="${value}" aria-selected="${operation.operator === value}">${label}</div>`
+    ).join('');
+    const selectedOperator = operators.find(({ value }) => value === operation.operator) || operators[0];
+    const removeButton = index === 0
+      ? '<span class="icon-space" aria-hidden="true"></span>'
+      : `<button class="icon-button" type="button" data-remove="${index}" aria-label="Delete operation ${operationNumber}" title="Delete operation ${operationNumber}"><iconify-icon icon="lucide:trash-2" aria-hidden="true"></iconify-icon></button>`;
 
-  if (!a || !b || !c1 || !c2) {
-    $('answer').textContent = 'Fill all fields';
-    $('steps').textContent = '';
-    return;
-  }
+    return `
+      <div class="operation-row" data-index="${index}">
+        <span class="operation-index">${String(operationNumber).padStart(2, '0')}</span>
+        <div class="custom-select">
+          <button class="control dropdown-trigger" id="operator-${index}" type="button" role="combobox" aria-haspopup="listbox" aria-expanded="false" aria-controls="operator-menu-${index}" aria-label="Operation ${operationNumber}: ${selectedOperator.label}">
+            <span>${selectedOperator.label}</span>
+            <iconify-icon icon="lucide:chevron-down" aria-hidden="true"></iconify-icon>
+          </button>
+          <div class="dropdown-menu" id="operator-menu-${index}" role="listbox" aria-label="Operation ${operationNumber}" hidden>${options}</div>
+        </div>
+        <input class="control" type="number" step="any" data-field="custom" value="${escapeHtml(operation.custom)}" aria-label="Custom number for operation ${operationNumber}" placeholder="Number">
+        ${removeButton}
+      </div>
+    `;
+  }).join('');
 
-  const A = Number(a);
-  const B = Number(b);
-  const C1 = Number(c1);
-  const C2 = Number(c2);
-
-  if (
-    ![A,B,C1,C2].every(Number.isFinite) ||
-    A < 0 || B < 0
-  ) {
-    $('answer').textContent = 'Invalid Input';
-    $('steps').textContent = 'Enter valid numbers. A and B must be non-negative.';
-    return;
-  }
-
-  const op1 = $('op1').value;
-  const op2 = $('op2').value;
-
-  const rootA = Math.sqrt(A);
-  const rootB = Math.sqrt(B);
-
-  const base = rootA + rootB;
-
-  const result1 = applyOperation(base, op1, C1);
-
-  if (result1 === null) {
-    $('answer').textContent = 'Cannot divide by zero';
-    $('steps').textContent = 'First custom number cannot be zero for division.';
-    return;
-  }
-
-  const result2 = applyOperation(result1, op2, C2);
-
-  if (result2 === null) {
-    $('answer').textContent = 'Cannot divide by zero';
-    $('steps').textContent = 'Second custom number cannot be zero for division.';
-    return;
-  }
-
-  if (!Number.isFinite(result1) || !Number.isFinite(result2)) {
-    $('answer').textContent = 'Result too large';
-    $('steps').textContent = 'Please use smaller numbers.';
-    return;
-  }
-
-  $('answer').textContent = fmt(result2);
-
-  $('steps').innerHTML = `
-    <b>STEP 1: Square Roots</b><br>
-    √${fmt(A)} + √${fmt(B)}<br>
-    ${fmt(rootA)} + ${fmt(rootB)} = ${fmt(base)}
-    <br><br>
-
-    <b>STEP 2: First Operation</b><br>
-    ${fmt(base)} ${op1} ${fmt(C1)} = ${fmt(result1)}
-    <br><br>
-
-    <b>STEP 3: Second Operation</b><br>
-    ${fmt(result1)} ${op2} ${fmt(C2)} = <b>${fmt(result2)}</b>
-  `;
+  $('operation-count').textContent = `${operationData.length} / 9`;
+  $('add-operation').disabled = operationData.length >= 9;
 }
 
-$('go').addEventListener('click', calculate);
-
-['a','b','c1','c2','op1','op2'].forEach(id => {
-  $(id).addEventListener('keydown', e => {
-    if(e.key === 'Enter') calculate();
+function closeDropdowns() {
+  $('operations').querySelectorAll('.dropdown-trigger[aria-expanded="true"]').forEach(trigger => {
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.parentElement.querySelector('.dropdown-menu').hidden = true;
   });
-  $(id).addEventListener('change', calculate);
+}
+
+function openDropdown(trigger) {
+  closeDropdowns();
+  trigger.setAttribute('aria-expanded', 'true');
+  const menu = trigger.parentElement.querySelector('.dropdown-menu');
+  menu.hidden = false;
+  const selectedOption = menu.querySelector('[aria-selected="true"]');
+  (selectedOption || menu.querySelector('[role="option"]')).focus();
+}
+
+function addOperation() {
+  if (operationData.length >= 9) return;
+  operationData.push({ operator: '/', custom: '1' });
+  renderOperations();
+  calculate();
+}
+
+function showError(message) {
+  $('answer').textContent = message;
+  $('steps').innerHTML = '<p class="message">Check the values and operations, then try again.</p>';
+}
+
+function calculate() {
+  const rawA = $('a').value.trim();
+  const rawB = $('b').value.trim();
+
+  if (!rawA || !rawB) {
+    showError('Fill in both starting values');
+    return;
+  }
+
+  const numberA = Number(rawA);
+  const numberB = Number(rawB);
+  if (![numberA, numberB].every(Number.isFinite) || numberA < 0 || numberB < 0) {
+    showError('Invalid starting values');
+    return;
+  }
+
+  const rootA = Math.sqrt(numberA);
+  const rootB = Math.sqrt(numberB);
+  const base = rootA + rootB;
+  const steps = [`
+    <div class="calculation-step">
+      <span class="step-number">01</span>
+      <div><div class="step-caption">Square roots</div><div class="step-equation">√${fmt(numberA)} + √${fmt(numberB)} = ${fmt(rootA)} + ${fmt(rootB)} = ${fmt(base)}</div></div>
+    </div>
+  `];
+  let result = base;
+
+  for (let index = 0; index < operationData.length; index += 1) {
+    const { operator, custom: rawCustom } = operationData[index];
+    if (!rawCustom.trim()) {
+      showError(`Enter a number for operation ${index + 1}`);
+      return;
+    }
+
+    const custom = Number(rawCustom);
+    if (!Number.isFinite(custom)) {
+      showError(`Invalid number in operation ${index + 1}`);
+      return;
+    }
+
+    const nextResult = applyOperation(result, operator, custom);
+    if (nextResult === null) {
+      showError(`Cannot divide by zero in operation ${index + 1}`);
+      return;
+    }
+    if (!Number.isFinite(nextResult)) {
+      showError('Result too large');
+      return;
+    }
+
+    const finalResult = index === operationData.length - 1;
+    steps.push(`
+      <div class="calculation-step">
+        <span class="step-number">${String(index + 2).padStart(2, '0')}</span>
+        <div><div class="step-caption">Operation ${index + 1}</div><div class="step-equation">${fmt(result)} ${operator} ${fmt(custom)} = ${finalResult ? `<strong>${fmt(nextResult)}</strong>` : fmt(nextResult)}</div></div>
+      </div>
+    `);
+    result = nextResult;
+  }
+
+  $('answer').textContent = fmt(result);
+  $('steps').innerHTML = steps.join('');
+}
+
+$('operations').addEventListener('input', event => {
+  const row = event.target.closest('.operation-row');
+  if (!row || !event.target.dataset.field) return;
+  const operation = operationData[Number(row.dataset.index)];
+  operation[event.target.dataset.field] = event.target.value;
+  calculate();
 });
 
+$('operations').addEventListener('click', event => {
+  const option = event.target.closest('.dropdown-option');
+  if (option) {
+    const row = option.closest('.operation-row');
+    operationData[Number(row.dataset.index)].operator = option.dataset.value;
+    const index = Number(row.dataset.index);
+    renderOperations();
+    calculate();
+    $(`operator-${index}`).focus();
+    return;
+  }
+
+  const trigger = event.target.closest('.dropdown-trigger');
+  if (trigger) {
+    if (trigger.getAttribute('aria-expanded') === 'true') {
+      closeDropdowns();
+    } else {
+      openDropdown(trigger);
+    }
+    return;
+  }
+
+  const button = event.target.closest('[data-remove]');
+  if (!button) return;
+  const index = Number(button.dataset.remove);
+  if (index === 0 || index >= operationData.length) return;
+  operationData.splice(index, 1);
+  renderOperations();
+  calculate();
+});
+
+function moveOptionFocus(menu, option, key) {
+  const options = [...menu.querySelectorAll('[role="option"]')];
+  const currentIndex = options.indexOf(option);
+  let nextIndex = currentIndex;
+
+  if (key === 'ArrowDown') nextIndex = (currentIndex + 1) % options.length;
+  if (key === 'ArrowUp') nextIndex = (currentIndex - 1 + options.length) % options.length;
+  if (key === 'Home') nextIndex = 0;
+  if (key === 'End') nextIndex = options.length - 1;
+  options[nextIndex].focus();
+}
+
+$('operations').addEventListener('keydown', event => {
+  const trigger = event.target.closest('.dropdown-trigger');
+  if (trigger && ['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(event.key)) {
+    event.preventDefault();
+    openDropdown(trigger);
+    return;
+  }
+
+  const option = event.target.closest('.dropdown-option');
+  if (!option) return;
+
+  if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+    event.preventDefault();
+    moveOptionFocus(option.closest('.dropdown-menu'), option, event.key);
+  } else if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    option.click();
+  } else if (event.key === 'Escape') {
+    event.preventDefault();
+    const selectTrigger = option.closest('.custom-select').querySelector('.dropdown-trigger');
+    closeDropdowns();
+    selectTrigger.focus();
+  }
+});
+
+document.addEventListener('click', event => {
+  if (!event.target.closest('.custom-select')) closeDropdowns();
+});
+
+$('add-operation').addEventListener('click', addOperation);
+$('go').addEventListener('click', calculate);
+['a', 'b'].forEach(id => {
+  $(id).addEventListener('input', calculate);
+  $(id).addEventListener('keydown', event => {
+    if (event.key === 'Enter') calculate();
+  });
+});
+
+renderOperations();
 calculate();
 </script>
-
 </body>
 </html>
