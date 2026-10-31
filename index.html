@@ -29,6 +29,8 @@
   box-sizing: border-box;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 *::-webkit-scrollbar {
@@ -54,6 +56,10 @@ body {
 }
 
 button, input, select { font: inherit; }
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
 
 .app-shell {
   width: min(100%, 720px);
@@ -417,11 +423,6 @@ h1 {
   letter-spacing: 1.1px;
 }
 
-.result-icon {
-  color: var(--coral);
-  font-size: 18px;
-}
-
 #answer {
   margin-top: 8px;
   color: #174e43;
@@ -552,7 +553,6 @@ h1 {
   <section class="result-panel" aria-live="polite" aria-label="Final result">
     <div class="result-topline">
       <span class="result-label">FINAL RESULT</span>
-      <iconify-icon class="result-icon" icon="lucide:move-up-right" aria-hidden="true"></iconify-icon>
     </div>
     <div id="answer">46.49489743</div>
   </section>
@@ -803,6 +803,7 @@ $('operations').addEventListener('keydown', event => {
 document.addEventListener('click', event => {
   if (!event.target.closest('.custom-select')) closeDropdowns();
 });
+document.addEventListener('contextmenu', event => event.preventDefault());
 
 $('add-operation').addEventListener('click', addOperation);
 $('go').addEventListener('click', calculate);
