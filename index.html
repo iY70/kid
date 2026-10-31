@@ -3,13 +3,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart Square Root Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advanced Square Root Calculator</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -18,82 +16,92 @@ body {
   place-items: center;
   padding: 20px;
   font-family: 'Segoe UI', Arial, sans-serif;
-  color: #24324b;
-  background: linear-gradient(135deg, #e8f1ff, #f5edff, #e4faff);
+  color: #263653;
+  background: linear-gradient(135deg, #e6f0ff, #f4eaff, #e2faff);
 }
 
 .card {
-  width: min(100%, 480px);
-  padding: 30px;
-  border-radius: 25px;
-  background: rgba(255,255,255,0.92);
-  border: 1px solid #ffffff;
-  box-shadow: 0 15px 50px rgba(83, 104, 160, 0.14);
+  width: min(100%, 490px);
+  padding: 28px;
+  border-radius: 24px;
+  background: white;
+  border: 1px solid #fff;
+  box-shadow: 0 15px 50px rgba(75, 95, 160, .14);
 }
 
 h1 {
-  margin: 0 0 8px;
   text-align: center;
+  color: #536bd0;
   font-size: 26px;
-  color: #334c91;
+  margin: 0 0 8px;
 }
 
 .hint {
-  margin: 0 0 28px;
   text-align: center;
-  color: #8490a8;
+  color: #8b98ac;
+  margin: 0 0 25px;
   font-size: 14px;
 }
 
 .section-label {
   display: block;
-  margin: 17px 0 9px;
-  font-size: 13px;
-  font-weight: 700;
-  color: #64748b;
+  margin: 19px 0 9px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .7px;
+  color: #7786a2;
 }
 
 .inputs {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
+  gap: 9px;
   align-items: center;
+}
+
+.operation-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
 input, select {
   width: 100%;
   min-width: 0;
-  padding: 14px 10px;
-  border: 2px solid #e4eaf5;
+  padding: 14px 9px;
+  border: 2px solid #e6ebf6;
   border-radius: 12px;
   background: #f8faff;
-  color: #263b66;
-  font-size: 17px;
+  color: #33466d;
+  font-size: 16px;
   text-align: center;
   outline: none;
-  transition: .2s;
 }
 
 input:focus, select:focus {
-  border-color: #8198f5;
-  background: #fff;
+  border-color: #8798ef;
+  background: white;
 }
 
 .plus {
+  color: #8193d7;
   font-size: 23px;
-  color: #8194ce;
   font-weight: bold;
 }
 
-.operation-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+.step-card {
+  padding: 16px;
+  margin-top: 15px;
+  border-radius: 15px;
+  background: #f5f7ff;
+  border: 1px solid #e8ebfc;
 }
 
-.operation-row select,
-.operation-row input {
-  height: 50px;
+.step-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: #6679ce;
+  margin-bottom: 12px;
 }
 
 button {
@@ -102,75 +110,63 @@ button {
   padding: 15px;
   border: none;
   border-radius: 13px;
-  background: linear-gradient(100deg, #6588f5, #9274e9);
+  background: linear-gradient(100deg, #6688f5, #9674e9);
   color: white;
   font-size: 17px;
-  font-weight: 700;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 7px 18px rgba(104, 126, 235, .23);
   transition: .2s;
 }
 
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 23px rgba(104, 126, 235, .3);
-}
-
-button:active {
-  transform: scale(.98);
 }
 
 .result-box {
-  margin-top: 27px;
-  padding: 22px 15px;
-  border-radius: 17px;
+  margin-top: 25px;
+  padding: 22px 12px;
   text-align: center;
-  background: linear-gradient(135deg, #edf2ff, #f5efff);
+  border-radius: 17px;
+  background: linear-gradient(120deg, #edf2ff, #f5edff);
 }
 
 .result-label {
+  color: #8390b1;
   font-size: 12px;
+  font-weight: bold;
   letter-spacing: 2px;
-  color: #8190b0;
-  font-weight: 700;
 }
 
 #answer {
-  margin-top: 9px;
+  color: #6175df;
   font-size: clamp(27px, 7vw, 38px);
   font-weight: 800;
-  color: #5c6fe0;
+  margin-top: 10px;
   overflow-wrap: anywhere;
 }
 
 .steps-box {
   margin-top: 16px;
-  padding: 17px;
-  border: 1px solid #e8edfa;
+  padding: 16px;
   border-radius: 13px;
   background: #fbfcff;
-  color: #53647e;
-  line-height: 1.9;
+  border: 1px solid #e9edf6;
   text-align: center;
-  overflow-wrap: anywhere;
+  line-height: 2;
   font-size: 14px;
+  color: #5c6c87;
+  overflow-wrap: anywhere;
 }
 
 .rule {
-  margin: 18px 0 0;
   text-align: center;
-  color: #9aa6bc;
+  margin-top: 18px;
+  color: #98a4b9;
   font-size: 12px;
 }
 
 @media(max-width: 380px) {
-  .card {
-    padding: 20px;
-  }
-
-  .inputs {
-    gap: 6px;
-  }
+  .card { padding: 19px; }
 }
 </style>
 </head>
@@ -179,140 +175,158 @@ button:active {
 
 <main class="card">
 
-  <h1>√ Smart Calculator</h1>
-  <p class="hint">Customize your square root calculation</p>
+<h1>√ Smart Calculator</h1>
+<p class="hint">Advanced Custom Calculation</p>
 
-  <label class="section-label">FIRST NUMBER</label>
-  <div class="inputs">
-    <input id="a" type="number" min="0" step="any"
-      value="600" placeholder="First number">
-    <span class="plus">+</span>
-    <input id="b" type="number" min="0" step="any"
-      value="400" placeholder="Second number">
-  </div>
+<label class="section-label">FIRST TWO NUMBERS</label>
 
-  <label class="section-label">SELECT OPERATION</label>
+<div class="inputs">
+  <input id="a" type="number" min="0" step="any" value="600">
+  <span class="plus">+</span>
+  <input id="b" type="number" min="0" step="any" value="400">
+</div>
+
+<div class="step-card">
+  <div class="step-title">⚙️ FIRST OPERATION</div>
   <div class="operation-row">
-    <select id="operator" aria-label="Select operation">
+    <select id="op1">
       <option value="+">+ Addition</option>
       <option value="-">− Subtraction</option>
       <option value="*">× Multiplication</option>
       <option value="/">÷ Division</option>
     </select>
 
-    <input id="custom" type="number" step="any"
-      value="1" placeholder="Custom number"
-      aria-label="Custom number">
+    <input id="c1" type="number" step="any" value="1"
+      placeholder="Custom number">
   </div>
+</div>
 
-  <button id="go">Calculate Result ✨</button>
+<div class="step-card">
+  <div class="step-title">✨ SECOND OPERATION (ON RESULT)</div>
+  <div class="operation-row">
+    <select id="op2">
+      <option value="/">÷ Division</option>
+      <option value="*">× Multiplication</option>
+      <option value="+">+ Addition</option>
+      <option value="-">− Subtraction</option>
+    </select>
 
-  <div class="result-box">
-    <div class="result-label">YOUR CUSTOM ANSWER</div>
-    <div id="answer">45.49489743</div>
+    <input id="c2" type="number" step="any" value="1"
+      placeholder="Custom number">
   </div>
+</div>
 
-  <div class="steps-box" id="steps">
-    √600 + √400 + 1<br>
-    24.49489743 + 20 + 1 = 45.49489743
-  </div>
+<button id="go">Calculate Final Result ✨</button>
 
-  <p class="rule">
-    Formula: √First + √Second (Selected Operation) Custom Number
-  </p>
+<div class="result-box">
+  <div class="result-label">FINAL ANSWER</div>
+  <div id="answer">46.49489743</div>
+</div>
+
+<div class="steps-box" id="steps"></div>
+
+<p class="rule">
+  Formula: (√A + √B) Operation 1 Operation 2
+</p>
 
 </main>
 
 <script>
-const aInput = document.getElementById('a');
-const bInput = document.getElementById('b');
-const operator = document.getElementById('operator');
-const custom = document.getElementById('custom');
-const answer = document.getElementById('answer');
-const steps = document.getElementById('steps');
+const $ = id => document.getElementById(id);
 
 function fmt(n) {
   return Number(n.toFixed(8)).toString();
 }
 
-function calculate() {
-  const rawA = aInput.value.trim();
-  const rawB = bInput.value.trim();
-  const rawC = custom.value.trim();
-
-  if (!rawA || !rawB || !rawC) {
-    answer.textContent = 'Enter all numbers';
-    steps.textContent = 'Please fill in all three input fields.';
-    return;
+function applyOperation(value, operator, custom) {
+  switch(operator) {
+    case '+': return value + custom;
+    case '-': return value - custom;
+    case '*': return value * custom;
+    case '/': return custom === 0 ? null : value / custom;
   }
-
-  const a = Number(rawA);
-  const b = Number(rawB);
-  const c = Number(rawC);
-
-  if (
-    !Number.isFinite(a) ||
-    !Number.isFinite(b) ||
-    !Number.isFinite(c) ||
-    a < 0 || b < 0
-  ) {
-    answer.textContent = 'Invalid Input';
-    steps.textContent = 'Enter valid numbers. Square root inputs must be non-negative.';
-    return;
-  }
-
-  const ra = Math.sqrt(a);
-  const rb = Math.sqrt(b);
-  const sum = ra + rb;
-  let result;
-
-  switch (operator.value) {
-    case '+':
-      result = sum + c;
-      break;
-
-    case '-':
-      result = sum - c;
-      break;
-
-    case '*':
-      result = sum * c;
-      break;
-
-    case '/':
-      if (c === 0) {
-        answer.textContent = 'Cannot divide by zero';
-        steps.textContent = 'Please enter a custom number other than zero.';
-        return;
-      }
-      result = sum / c;
-      break;
-  }
-
-  if (!Number.isFinite(result)) {
-    answer.textContent = 'Result too large';
-    steps.textContent = 'Please try smaller numbers.';
-    return;
-  }
-
-  answer.textContent = fmt(result);
-
-  const symbol = operator.value;
-
-  steps.innerHTML =
-    `√${fmt(a)} + √${fmt(b)} ${symbol} ${fmt(c)}<br>` +
-    `${fmt(ra)} + ${fmt(rb)} = ${fmt(sum)}<br>` +
-    `${fmt(sum)} ${symbol} ${fmt(c)} = <b>${fmt(result)}</b>`;
 }
 
-document.getElementById('go').addEventListener('click', calculate);
+function calculate() {
+  const a = $('a').value.trim();
+  const b = $('b').value.trim();
+  const c1 = $('c1').value.trim();
+  const c2 = $('c2').value.trim();
 
-[aInput, bInput, custom, operator].forEach(el => {
-  el.addEventListener('keydown', e => {
-    if (e.key === 'Enter') calculate();
+  if (!a || !b || !c1 || !c2) {
+    $('answer').textContent = 'Fill all fields';
+    $('steps').textContent = '';
+    return;
+  }
+
+  const A = Number(a);
+  const B = Number(b);
+  const C1 = Number(c1);
+  const C2 = Number(c2);
+
+  if (
+    ![A,B,C1,C2].every(Number.isFinite) ||
+    A < 0 || B < 0
+  ) {
+    $('answer').textContent = 'Invalid Input';
+    $('steps').textContent = 'Enter valid numbers. A and B must be non-negative.';
+    return;
+  }
+
+  const op1 = $('op1').value;
+  const op2 = $('op2').value;
+
+  const rootA = Math.sqrt(A);
+  const rootB = Math.sqrt(B);
+
+  const base = rootA + rootB;
+
+  const result1 = applyOperation(base, op1, C1);
+
+  if (result1 === null) {
+    $('answer').textContent = 'Cannot divide by zero';
+    $('steps').textContent = 'First custom number cannot be zero for division.';
+    return;
+  }
+
+  const result2 = applyOperation(result1, op2, C2);
+
+  if (result2 === null) {
+    $('answer').textContent = 'Cannot divide by zero';
+    $('steps').textContent = 'Second custom number cannot be zero for division.';
+    return;
+  }
+
+  if (!Number.isFinite(result1) || !Number.isFinite(result2)) {
+    $('answer').textContent = 'Result too large';
+    $('steps').textContent = 'Please use smaller numbers.';
+    return;
+  }
+
+  $('answer').textContent = fmt(result2);
+
+  $('steps').innerHTML = `
+    <b>STEP 1: Square Roots</b><br>
+    √${fmt(A)} + √${fmt(B)}<br>
+    ${fmt(rootA)} + ${fmt(rootB)} = ${fmt(base)}
+    <br><br>
+
+    <b>STEP 2: First Operation</b><br>
+    ${fmt(base)} ${op1} ${fmt(C1)} = ${fmt(result1)}
+    <br><br>
+
+    <b>STEP 3: Second Operation</b><br>
+    ${fmt(result1)} ${op2} ${fmt(C2)} = <b>${fmt(result2)}</b>
+  `;
+}
+
+$('go').addEventListener('click', calculate);
+
+['a','b','c1','c2','op1','op2'].forEach(id => {
+  $(id).addEventListener('keydown', e => {
+    if(e.key === 'Enter') calculate();
   });
-
-  el.addEventListener('change', calculate);
+  $(id).addEventListener('change', calculate);
 });
 
 calculate();
