@@ -41,6 +41,7 @@
 
 body {
   min-height: 100vh;
+  min-height: 100svh;
   margin: 0;
   padding: 38px 20px;
   display: grid;
@@ -63,6 +64,7 @@ input, textarea {
 
 .app-shell {
   width: min(100%, 720px);
+  min-width: 0;
   padding: clamp(22px, 5vw, 42px);
   border: 1px solid rgba(255, 255, 255, .9);
   border-radius: 20px;
@@ -83,6 +85,7 @@ input, textarea {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .brand-mark {
@@ -489,20 +492,43 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 @media (max-width: 520px) {
-  body { padding: 14px; }
+  body {
+    place-items: start center;
+    padding: 14px;
+  }
   .app-shell { padding: 22px 17px; border-radius: 15px; }
   .topbar { padding-bottom: 21px; }
+  .brand-caption { display: none; }
   .page-heading { margin-top: 24px; }
   h1 { font-size: 28px; }
-  .operation-row { grid-template-columns: 28px minmax(0, 1fr) minmax(0, 1fr) 34px; gap: 7px; padding: 9px 7px; }
-  .icon-button, .icon-space { width: 32px; height: 34px; }
+  .operation-row {
+    grid-template-columns: 28px minmax(0, 1fr) 34px;
+    grid-template-areas:
+      "index operator action"
+      "index custom action";
+    gap: 8px;
+    padding: 10px 7px;
+  }
+  .operation-index { grid-area: index; }
+  .custom-select { grid-area: operator; width: 100%; }
+  .operation-row [data-field="custom"] { grid-area: custom; }
+  .icon-button, .icon-space { grid-area: action; width: 32px; height: 34px; }
   .control { padding: 0 9px; font-size: 13px; }
-  .values-panel { gap: 8px; padding: 12px; }
+  .values-panel {
+    grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+    gap: 8px;
+    padding: 12px;
+  }
+  .values-panel > label { min-width: 0; }
 }
 
 @media (max-width: 360px) {
-  .operation-row { grid-template-columns: 25px minmax(0, 1fr) minmax(0, .9fr) 30px; gap: 5px; }
-  .control { padding: 0 6px; font-size: 12px; }
+  body { padding: 10px; }
+  .app-shell { padding: 18px 12px; }
+  .operation-row { grid-template-columns: 24px minmax(0, 1fr) 30px; gap: 7px; padding: 8px 6px; }
+  .icon-button, .icon-space { width: 30px; }
+  .control { padding: 0 8px; font-size: 12px; }
+  .dropdown-menu { width: max(100%, 180px); }
   .status { padding: 6px 8px; font-size: 10px; }
 }
 </style>
